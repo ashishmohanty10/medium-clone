@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "db:migrate": "prisma migrate dev --name init_schema",
+    "db:generate": "prisma generate --no-engine"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.17.0",
+    "@prisma/extension-accelerate": "^1.1.0",
+    "hono": "^4.5.1",
+    "prisma": "^5.17.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240725.0",
+    "wrangler": "^3.67.1"
+  }
+}
