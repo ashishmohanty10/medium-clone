@@ -18,9 +18,8 @@ blogRouter.use("/*", async (c, next) => {
   const user = await verify(authHeader, c.env.JWT_SECRET);
 
   if (user) {
-    //ts-@ignore
-    c.set("userId", user.id);
-    next();
+    c.set("userId", user.id as string);
+    await next();
   } else {
     c.status(403);
     return c.json({
@@ -31,6 +30,8 @@ blogRouter.use("/*", async (c, next) => {
 
 blogRouter.post("/", async (c) => {
   const body = await c.req.json();
+  const authorId = c.get("userId");
+
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
@@ -40,7 +41,7 @@ blogRouter.post("/", async (c) => {
       data: {
         title: body.title,
         content: body.content,
-        authorId: "1",
+        authorId: authorId,
       },
     });
 
@@ -83,29 +84,6 @@ blogRouter.put("/", async (c) => {
   }
 });
 
-blogRouter.get("/:id", async (c) => {
-  const body = await c.req.json();
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
-
-  try {
-    const blog = await prisma.blog.findFirst({
-      where: {
-        id: body.id,
-      },
-    });
-
-    return c.json({
-      blog,
-    });
-  } catch (error) {
-    return c.json({
-      message: "Error while fetching blogs posts",
-    });
-  }
-});
-
 // Todo:  add Paginations
 blogRouter.get("/bulk", async (c) => {
   const prisma = new PrismaClient({
@@ -117,4 +95,27 @@ blogRouter.get("/bulk", async (c) => {
   return c.json({
     blogs,
   });
+});
+
+blogRouter.get("/:id", async (c) => {
+  const id = c.req.param("id");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const blog = await prisma.blog.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    return c.json({
+      blog,
+    });
+  } catch (error) {
+    return c.json({
+      message: "Error while fetching blogs posts",
+    });
+  }
 });
