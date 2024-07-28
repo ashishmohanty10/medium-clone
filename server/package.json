@@ -9,9 +9,13 @@
   "dependencies": {
     "@prisma/client": "^5.17.0",
     "@prisma/extension-accelerate": "^1.1.0",
+    "@rashdriver213123/medium-common": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "hono": "^4.5.1",
-    "prisma": "^5.17.0"
+    "i": "^0.3.7",
+    "npm": "^10.8.2",
+    "prisma": "^5.17.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240725.0",

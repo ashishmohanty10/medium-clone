@@ -2,6 +2,10 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { verify } from "hono/jwt";
+import {
+  updateBlogInput,
+  createBlogInput,
+} from "@rashdriver213123/medium-common";
 
 export const blogRouter = new Hono<{
   Bindings: {
@@ -13,6 +17,7 @@ export const blogRouter = new Hono<{
   };
 }>();
 
+//middleware check
 blogRouter.use("/*", async (c, next) => {
   const authHeader = c.req.header("authorization") || "";
   const user = await verify(authHeader, c.env.JWT_SECRET);
@@ -28,10 +33,18 @@ blogRouter.use("/*", async (c, next) => {
   }
 });
 
+// Create Blog
 blogRouter.post("/", async (c) => {
   const body = await c.req.json();
-  const authorId = c.get("userId");
+  const { success } = createBlogInput.safeParse(body);
+  if (!success) {
+    c.status(411);
+    return c.json({
+      message: "Cannot create blog inputs are invalid",
+    });
+  }
 
+  const authorId = c.get("userId");
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
@@ -56,8 +69,16 @@ blogRouter.post("/", async (c) => {
   }
 });
 
+//Update blog
 blogRouter.put("/", async (c) => {
   const body = await c.req.json();
+  const { success } = updateBlogInput.safeParse(body);
+  if (!success) {
+    c.status(411);
+    return c.json({
+      message: "Cannot update inputs invalid ",
+    });
+  }
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
