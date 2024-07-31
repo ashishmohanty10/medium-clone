@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@rashdriver213123/medium-common": "^1.0.0",
+    "axios": "^1.7.2",
+    "jsonwebtoken": "^9.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1"
