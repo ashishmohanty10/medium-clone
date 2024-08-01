@@ -1,11 +1,11 @@
-import AuthComponent from "../components/Auth";
 import Quote from "../components/Quote";
+import SignUpComponent from "../components/SignUp";
 
 export default function Signup() {
   return (
     <div className="lg:grid grid-cols-2">
       <div>
-        <AuthComponent type="signup" />
+        <SignUpComponent />
       </div>
       <div className="hidden lg:block">
         <Quote />
