@@ -10,6 +10,7 @@ const app = new Hono<{
     DATABASE_URL: string;
   };
 }>();
+
 app.use("/api/*", cors());
 
 app.route("/api/v1/user", userRouter);

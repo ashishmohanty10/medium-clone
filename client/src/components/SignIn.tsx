@@ -6,7 +6,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 
 export default function SignInComponent() {
-  const [postInputs, setPostInputs] = useState<SigninInput>({
+  const [signinInputs, setSigninInputs] = useState<SigninInput>({
     username: "",
     password: "",
   });
@@ -16,7 +16,7 @@ export default function SignInComponent() {
   async function sendRequest() {
     try {
       const response = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, {
-        postInputs,
+        signinInputs,
       });
       const jwt = response.data;
       localStorage.setItem("token", jwt);
@@ -45,8 +45,8 @@ export default function SignInComponent() {
           type="email"
           placeholder="me@gmail.com"
           onChange={(e) =>
-            setPostInputs({
-              ...postInputs,
+            setSigninInputs({
+              ...signinInputs,
               username: e.target.value,
             })
           }
@@ -57,8 +57,8 @@ export default function SignInComponent() {
           type="password"
           placeholder="1212qdkasd"
           onChange={(e) =>
-            setPostInputs({
-              ...postInputs,
+            setSigninInputs({
+              ...signinInputs,
               password: e.target.value,
             })
           }

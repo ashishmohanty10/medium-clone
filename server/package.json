@@ -4,7 +4,8 @@
     "dev": "wrangler dev src/index.ts",
     "deploy": "wrangler deploy --minify src/index.ts",
     "db:migrate": "prisma migrate dev --name init_schema",
-    "db:generate": "prisma generate --no-engine"
+    "db:generate": "prisma generate --no-engine",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",

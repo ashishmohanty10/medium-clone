@@ -7,9 +7,9 @@ import { BACKEND_URL } from "../config";
 
 export default function AuthComponent() {
   const [postInputs, setPostInputs] = useState<SignupInput>({
-    name: "",
     username: "",
     password: "",
+    name: "",
   });
 
   const navigate = useNavigate();
