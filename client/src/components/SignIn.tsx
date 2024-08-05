@@ -15,12 +15,13 @@ export default function SignInComponent() {
 
   async function sendRequest() {
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, {
-        signinInputs,
-      });
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/signin`,
+        signinInputs
+      );
       const jwt = response.data;
       localStorage.setItem("token", jwt);
-      navigate("/blogs");
+      navigate("/blog");
     } catch (error) {
       alert("Error while signin");
       console.log("Request Failed");

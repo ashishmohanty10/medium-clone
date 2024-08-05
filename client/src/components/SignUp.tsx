@@ -16,9 +16,10 @@ export default function AuthComponent() {
 
   async function sendRequest() {
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, {
-        postInputs,
-      });
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/signup`,
+        postInputs
+      );
       const jwt = response.data;
       localStorage.setItem("token", jwt);
       navigate("/blogs");
@@ -54,6 +55,7 @@ export default function AuthComponent() {
         <LabelledInput
           label="Email"
           placeholder="me@gmail.com"
+          type="email"
           onChange={(e) =>
             setPostInputs({
               ...postInputs,
